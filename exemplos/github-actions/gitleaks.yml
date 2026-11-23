@@ -1,0 +1,22 @@
+# Copie para .github/workflows/gitleaks.yml
+name: gitleaks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  segredos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Procurar chaves e tokens vazados
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Em repositórios de organização, a action pede GITLEAKS_LICENSE (gratuita): https://gitleaks.io

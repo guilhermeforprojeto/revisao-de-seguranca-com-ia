@@ -1,0 +1,19 @@
+# Copie para .github/workflows/semgrep.yml
+name: semgrep
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analise-estatica:
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v4
+      - name: Semgrep com regras públicas
+        run: semgrep scan --config auto --error
